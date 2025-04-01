@@ -7,6 +7,15 @@ const port = 3000;
 
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+app.use(express.json());
+
+//XMLHTTPRequest, fetch, axios,
+
 app.use(morgan("combined"));
 //template engine
 app.engine(".hbs", engine({ extname: ".hbs" }));
@@ -18,7 +27,18 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 app.get("/news", (req, res) => {
+  console.log(req.query.q);
   res.render("news");
+});
+app.get("/search", (req, res) => {
+  console.log(req.query.q);
+  res.render("search");
+});
+app.post("/search", (req, res) => {
+  console.log(req.body.q);
+  //query parameter: .query
+  //form data: .body
+  res.send("");
 });
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
